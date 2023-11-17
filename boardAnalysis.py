@@ -1,5 +1,6 @@
 # python 3.9.6 64-bit
 
+
 def Find_Coordinates_Of_Arrays(PlayerCoordinate: list, ArrayType: str) -> list:
     # Array = [' ', ' ', ' ', ' ', 'X', 'O', 'O', ' ', ' ', 'X', ' ']
     # PlayerCoordinate = [4, 5]
@@ -179,60 +180,3 @@ def Optimal_neighbour(Game_Board: list, playerCoordinate: list) -> list:
 
     return [player_nearby_coordinates, nearby_allArrays, nearby_allArraysCoordinates, nearby_connection_streak, nearby_connection_streak_coordinate]
 
-def RetrieveEligibleLists(Game_Board: list, playerCoordinate: list):
-    player_nearby_coordinates, nearby_allArrays, nearby_allArraysCoordinates, nearby_connection_streak, nearby_connection_streak_coordinate\
-          = Optimal_neighbour(Game_Board, playerCoordinate)
-    
-    """ ---------- Prioritize Player Max Connection-Streak Array ---------- """
-
-    # Prioritize sorting based on connection-streak length
-    playerCoordinateID = player_nearby_coordinates.index(playerCoordinate)
-
-    # Section for Player Data 
-    maxVal = max(nearby_connection_streak[playerCoordinateID].values())
-
-    # primarySelection: Array ID that leads to the array with highest connection-streak
-    #                       maximum is four element and minimum is one
-    #                       minimum is always one because the bot is programmed to place a piece
-    #                       randomly on the adjacent points of playerCoordinate
-    primarySelectionID = [key for key, val in nearby_connection_streak[playerCoordinateID].items() if val == maxVal] 
-    primaryArrays = [nearby_allArraysCoordinates[playerCoordinateID][i] for i in primarySelectionID] 
-    primaryArraysStreakCoordinates = [nearby_connection_streak_coordinate[playerCoordinateID][i] for i in primarySelectionID] # This array consists the starting&ending point of the streak
-    playerConnectionPoints = [nearby_connection_streak_coordinate[playerCoordinateID][key] for key in primarySelectionID]
-    """  
-        The bot should only check the points that are two units left and right to the
-    starting & ending point for player's connection-streak. However, if it is already blocked
-    by the bot piece, the bot will move on to the other side. 
-    """
-    # [[0, 10], [1, 9], [2, 8], [3, 7], [4, 6], [5, 5], [6, 4], [7, 3], [8, 2], [9, 1], [10, 0]]         
-
-    # Transition to filtering out all the other associating adjacent points
-    for scanKey in nearby_connection_streak.keys():
-
-        # Provide the primaryArrays for comparison
-        for array in primaryArrays: 
-            
-            for points in array:
-                pass
-
-
-
-        # Check for available arrays for intersections
-        
-
-
-Game_Board = [[' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', 'X', ' ', 'X', 'O', ' ', ' ', 'X'], # [3,7]
-                  [' ', ' ', ' ', ' ', 'X', 'O', 'O', 'O', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', 'X', 'O', 'O', 'O', ' ', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'X', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '], 
-                  [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']]
-playerCoordinate=[3,7]
-     
-
-RetrieveEligibleLists(Game_Board, playerCoordinate)
